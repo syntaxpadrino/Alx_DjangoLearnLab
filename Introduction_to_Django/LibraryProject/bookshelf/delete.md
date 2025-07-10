@@ -1,4 +1,4 @@
-
+from bookshelf.models import Book
 ***
 
 ### `delete.md`
