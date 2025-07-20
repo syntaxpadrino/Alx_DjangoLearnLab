@@ -1,44 +1,31 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
-def get_books_by_author(author_id):
+def get_books_by_author(author_name):
     try:
-        author = Author.objects.get(id=author_id)
+        author = Author.objects.get(name=author_name)
         books = Book.objects.filter(author=author)
-        print(f"Books by {author.name}:")
-        for book in books:
-            print(f"- {book.title} ({book.publication_year})")
         return books
     except Author.DoesNotExist:
-        print("Author not found")
         return None
 
-def list_all_books_in_library(library_id):
+def list_all_books_in_library(library_name):
     try:
-        library = Library.objects.get(id=library_id)
+        library = Library.objects.get(name=library_name)
         books = library.books.all()
-        print(f"Books in library '{library.name}':")
-        for book in books:
-            print(f"- {book.title} by {book.author.name} ({book.publication_year})")
         return books
     except Library.DoesNotExist:
-        print("Library not found")
         return None
 
-def get_librarian_for_library(library_id):
+def get_librarian_for_library(library_name):
     try:
-        library = Library.objects.get(id=library_id)
+        library = Library.objects.get(name=library_name)
         librarian = Librarian.objects.get(library=library)
-        print(f"Librarian for '{library.name}' is {librarian.name}")
         return librarian
-    except Library.DoesNotExist:
-        print("Library not found")
-        return None
-    except Librarian.DoesNotExist:
-        print(f"No librarian assigned to '{library.name}'")
+    except (Library.DoesNotExist, Librarian.DoesNotExist):
         return None
 
-# Example usage
+# Example usage:
 if __name__ == "__main__":
-    get_books_by_author(1)
-    list_all_books_in_library(1)
-    get_librarian_for_library(1)
+    print(get_books_by_author("J.K. Rowling"))
+    print(list_all_books_in_library("Central Library"))
+    print(get_librarian_for_library("Central Library"))
