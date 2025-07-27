@@ -37,7 +37,7 @@ def register(request):
     else:
         form = UserCreationForm()
     
-    return render(request, 'relationship_app/templates/registration/register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 @login_required
 def profile(request):
